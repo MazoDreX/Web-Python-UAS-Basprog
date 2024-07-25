@@ -1,0 +1,8 @@
+# This file is used by pip to install required python packages
+# Usage: pip install -r requirements.
+
+#Packages
+flask
+flask_mysqldb
+python-dotenv #.env file
+
