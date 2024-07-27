@@ -42,8 +42,9 @@ venv/
 
 # Static assets
 # If you manage static assets separately, uncomment these
-static/
-assets/
+static/dist/css/output.css
+
+
 
 #Sensitive Information
 .env

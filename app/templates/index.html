@@ -3,62 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Siakad</title>
   <link rel="stylesheet" href="{{url_for('static', filename='dist/css/output.css')}}">
-  <script>
-    function updateProgramStudi(){
-        const fakultasSelect = document.getElementById('fakultas');
-        const programStudiSelect = document.getElementById('program_studi');
-
-        const selectedFakultasIndex = fakultasSelect.selectedIndex;
-        const programStudiOptions = {{ program_studi | tojson }};
-
-        programStudiSelect.innerHTML = '';
-        console.log(selectedFakultasIndex)
-        if (selectedFakultasIndex > 0) {
-            console.log(programStudiOptions[selectedFakultasIndex - 1])
-            const options = programStudiOptions[selectedFakultasIndex - 1];
-            options.forEach((option) =>  {
-                const opt = document.createElement('option');
-                opt.value = option;
-                opt.textContent = option;
-                programStudiSelect.appendChild(opt);
-            });
-        }
-    }
-  </script>
+  <script src="{{url_for('static', filename='js/script.js') }}"></script>
+  <script> const programStudiOptions = {{ program_studi | tojson }}; </script>
 </head>
 <body class="bg-stone-100 flex items-center justify-center min-h-screen">
     <div class="bg-stone-400 p-8 rounded-lg shadow-lg w-full max-w-4xl">
         <h1 class="text-4xl font-bold text-white mb-8 text-center">Identitas Mahasiswa</h1>
+
+        <!-- onsubmit berfungsi supaya data yang kosong tidak akan pergi ke /submit  -->
+        <form id="form" method="POST" action="/submit" onsubmit="return validateSubmit()">
+        <div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="flex flex-col">
-                <label class="text-white mb-2">Nama</label>
-                <input type="text" class="p-2 bg-stone-500 text-white rounded-md">
+            <div class="place-content-center">
+                <div class="flex flex-col p-2">
+                    <label class="text-white mb-2">Nama</label>
+                    <input id="nama" name="nama" type="text" required class="p-2 bg-stone-500 text-white rounded-md">
+                </div>
+                <div class="flex flex-col p-2">
+                    <label class="text-white mb-2">NIM</label>
+                    <input id='nim' name="nim" type="number" inputmode="numeric" class="p-2 bg-stone-500 text-white rounded-md" max-length="8" onblur="validateNIM()">
+                </div>
             </div>
-            <div class="flex flex-col">
-                <label class="text-white mb-2">Fakultas</label>
-                <select id="fakultas" class="p-2 bg-stone-500 text-white rounded-md" onchange="updateProgramStudi()">
-                    <option  value="" selected disabled hidden>Pilih Fakultas</option>
-                    {% for nama_fakultas in fakultas %}
-                        <option value="{{ nama_fakultas }}" >{{ nama_fakultas }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="flex flex-col">
-                <label class="text-white mb-2">NIM</label>
-                <input type="text" class="p-2 bg-stone-500 text-white rounded-md">
-            </div>
-            <div class="flex flex-col">
-                <label class="text-white mb-2">Program Studi</label>
-                <select id="program_studi" class="p-2 bg-stone-500 text-white rounded-md">
-                    <option value="">Pilih Program Studi</option>
-                </select>
+            <div>
+                <div class="flex flex-col p-2">
+                    <label class="text-white mb-2">Fakultas</label>
+                    <select id="fakultas" name="fakultas" class="p-2 bg-stone-500 text-white rounded-md" onchange="updateProgramStudi()">
+                        <option  value="" selected disabled hidden>Pilih Fakultas</option>
+                        <!-- loop untuk mengambil data fakultas -->
+                        {% for nama_fakultas in fakultas %}
+                            <option value="{{ nama_fakultas }}" >{{ nama_fakultas }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="flex flex-col p-2">
+                    <label class="text-white mb-2">Program Studi</label>
+                    <select id="program_studi" name="program_studi" class="p-2 bg-stone-500 text-white rounded-md">
+                        <option value="">Pilih Program Studi</option>
+                    </select>
+                </div>
+                <div class="flex flex-col p-2">
+                    <label class="text-white mb-2">Semester</label>
+                    <input name="semester" id="semester" type="number" class="p-2 bg-stone-500 text-white rounded-md" min="1" max="8" onblur="validateSemester()">
+                </div>
             </div>
         </div>
         <div class="flex justify-center">
-            <button class="bg-stone-500 text-white p-2 px-4 rounded-md mt-8 hover:bg-stone-600">Submit</button>
+            <button type="submit" class="bg-stone-500 text-white p-2 px-4 rounded-md mt-8 hover:bg-stone-600">Submit</button>
         </div>
+    </div>
+    </form>
     </div>
 </body>
 </html>

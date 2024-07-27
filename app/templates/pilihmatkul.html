@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siakad - Pilih Mata Kuliah</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='dist/css/output.css')}}">
+</head>
+<script src="{{url_for('static', filename='js/script.js') }}" ></script>
+<body class="bg-stone-100 flex items-center justify-center min-h-screen">
+    <div class="bg-stone-400 p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <h1 class="text-4xl font-bold text-white mb-1 text-center">Pilih Mata Kuliah</h1>
+        <h1 class="text-2xl font-bold text-white mb-8 text-center">Semester {{ semester }}</h1>
+        <form action="/submitmatakuliah" method="POST" onsubmit="return validateListForm()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div id="matakuliah_wajib" class="bg-white p-4 rounded-lg shadow-lg">
+                <h1 class="text-2xl font-bold text-stone-500 mb-4 text-center">Mata Kuliah Wajib</h1>
+                <input type="hidden" name="nama" value="{{ nama }}">
+                <input type="hidden" name="nim" value="{{ nim }}">
+                <input type="hidden" name="fakultas" value="{{ fakultas }}">
+                <input type="hidden" name="program_studi" value="{{ program_studi }}">
+                <input type="hidden" name="semester" value="{{ semester }}">
+                {% for id_matkul_wajib, nama_matkul in zip_lists(id_matakuliah_wajib, mata_kuliah_wajib) %}
+                    <input type="checkbox" id="{{ id_matkul_wajib }}" name="matkul_wajib" value="{{ id_matkul_wajib }}" checked hidden class="mr-2">
+                    <p for="{{ id_matkul_wajib }}" class="text-stone-600 mb-2">- {{ nama_matkul }}</p>
+                {% endfor %}
+            </div>
+            <div id="matakuliah_pilihan" class="bg-white p-4 rounded-lg shadow-lg">
+                <h1 class="text-2xl font-bold text-stone-500 mb-4 text-center">Mata Kuliah Pilihan</h1>
+                
+                {% if mata_kuliah_pilihan %}
+                    {% for id_matkul_pilihan, nama_matkul in zip_lists(id_matakuliah_pilihan, mata_kuliah_pilihan) %}
+                        <div class="flex items-center mb-2">
+                            <input type="checkbox" id="{{ id_matkul_pilihan }}" name="matkul_pilihan" value="{{ id_matkul_pilihan }}" class="mr-2">
+                            <label for="{{ id_matkul_pilihan }}" class="text-stone-600">{{ nama_matkul }}</label>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-stone-600">Tidak ada Mata Kuliah Pilihan</p>
+                {% endif %}
+                
+                
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <button class="bg-stone-500 text-white p-2 px-4 rounded-md mt-4 hover:bg-stone-600" type="submit">Submit</button>
+        </div>
+        </form> 
+        </div>
+    </div>
+</body>
+</html>

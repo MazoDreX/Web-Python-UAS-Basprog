@@ -1,6 +1,7 @@
 from flask import Flask
 from dotenv import load_dotenv
 from flask_mysqldb import MySQL
+from app.utils.function import make_table, matkul_TI_insert
 import os
 
 app = Flask(__name__)
@@ -22,8 +23,20 @@ app.config['MYSQL_DB'] = DATABASE_NAME
 try:
     mysql = MySQL(app)
     print("Berhasil terhubung ke database!")
+    try:
+        with app.app_context():
+            make_table(mysql.connection)
+        print("Tabel Mahasiswa, Matakuliah_TI, Mahasiswa_Matakuliah telah dibuat")
+        try:
+            with app.app_context():
+                matkul_TI_insert(mysql.connection)
+        except Exception as e:
+            print("Error menambahkan data matakuliah_TI:", e)
+    except Exception as e:
+        print("Error membuat tabel:", e)
 except Exception as e:
     print("Error menghubungkan ke database:", e)
+
 
 from app import routes
 
