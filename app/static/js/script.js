@@ -72,10 +72,14 @@ function updateProgramStudi(){
 
 function validateListForm() {
     var pilihanChecked = document.querySelectorAll('input[name="matkul_pilihan"]:checked').length;
-
-    if (pilihanChecked === 0) {
-        alert("Pilih minimal 1 mata kuliah pilihan");
-        return false;
+    const pilihan = document.getElementsByName('matkul_pilihan');
+    
+    if (pilihan.length !== 0) {
+        if (pilihanChecked === 0) {
+            alert("Pilih minimal 1 mata kuliah pilihan");
+            return false;
+        }
+    } else {
+        return true;
     }
-    return true;
 }

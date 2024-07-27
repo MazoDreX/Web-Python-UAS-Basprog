@@ -4,23 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siakad - Identitas Mahasiswa</title>
+    <!-- Link untuk tailwindcss -->
     <link rel="stylesheet" href="{{url_for('static', filename='dist/css/output.css')}}">
-    <script>
-        // print()
-
-        // const fakultasString = {{  fakultas | tojson }}
-        // if (fakultasString != "Teknik Informatika") {
-        //     alert("Maaf, Mata kuliah belum tersedia")
-        // }
-
-        // console.log(fakultasString)
-    </script>
 </head>
 <body class="bg-stone-400 flex items-center justify-center min-h-screen">
     <div class="bg-stone-600 p-8 rounded-lg shadow-lg w-full max-w-4xl">
         <h1 class="text-4xl font-bold text-white mb-8 text-center underline">Hasil Identitas Mahasiswa</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
             <div class="">
+                <!-- Menampilkan identitas mahasiswa -->
                 <div class="flex flex-col p-2 h-full">
                     <p class="pl-2 text-4xl font-bold text-white ">{{ nama }}</p>
                     <div class="border-b-2 pb-2">
@@ -34,6 +26,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Menampilkan matakuliah dengan meginterasikannya -->
             <div class="place-content-center">
                 <div class="flex flex-col bg-white p-4 rounded-lg shadow-lg" id="matakuliah_wajib" >
                     <h1 class="text-2xl font-bold text-stone-500 mb-4 text-center">Mata Kuliah Wajib</h1>
@@ -43,17 +36,18 @@
                 </div>
                 <div class="flex flex-col bg-white p-4 rounded-lg shadow-lg mt-6" id="matakuliah_pilihan" >
                     <h1 class="text-2xl font-bold text-stone-500 mb-4 text-center">Mata Kuliah Pilihan</h1>
-                    {% for matkul_pilihan in matakuliah_pilihan %}
-                        <p class="pb-1 text-stone-600 ">- {{ matkul_pilihan }}</p>  
-                    {% endfor %}
+                    {% if matakuliah_pilihan %}
+                        {% for matkul_pilihan in matakuliah_pilihan %}
+                            <p class="pb-1 text-stone-600 ">- {{ matkul_pilihan }}</p>  
+                        {% endfor %}
+                    {% else %}
+                        <p class="pb-1 text-stone-600 ">Tidak ada mata kuliah pilihan</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
         <div class="flex justify-center">
 
     </div>
-    <script>
-        const dateElement = document.getElementsById('date');
-    </script>
 </body>
 </html>

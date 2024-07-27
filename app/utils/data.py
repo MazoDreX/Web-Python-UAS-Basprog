@@ -1,3 +1,4 @@
+#Objeck Identitas
 class Identitas:
     def __init__(self, nama=None, nim=None, fakultas=None, program_studi=None, semester=None, mata_kuliah_TI_Pilihan_Mahasiswa=None):
         self.nama = nama.upper() if nama is not None else None

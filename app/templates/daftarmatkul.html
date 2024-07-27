@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siakad - Daftar Mata Kuliah</title>
+    <!-- Link untuk tailwindcss dan file javascript -->
     <link rel="stylesheet" href="{{url_for('static', filename='dist/css/output.css')}}">
     <script src="{{url_for('static', filename='js/script.js') }}"></script>
     <script>
- 
+        <!-- Fungsi ini digunakan untuk melihat mata kuliah di semester lain dengan menginputkan semester baru jika pengguna menekan Ya-->
         function otherSemester() {
             const semesterDiv = document.getElementById('semesterDiv');
             semesterDiv.innerHTML = `
             <label class="text-white mb-2">Masukan Semester yang diinginkan</label>
             <form action="/daftarmatkul">
                 <div class"flex">
+                    <input type="hidden" name="nama" value="{{ nama }}">
+                    <input type="hidden" name="nim" value="{{ nim }}">
+                    <input type="hidden" name="fakultas" value="{{ fakultas }}">
+                    <input type="hidden" name="program_studi" value="{{ program_studi }}">
                     <input name="semester" id="semester" type="number" class="p-2 bg-stone-500 text-white rounded-md w-1/4" min="1" max="8" onblur="validateSemester()">
                     <button type="submit" class="bg-stone-500 text-white p-2 px-4 rounded-md hover:bg-stone-600 w-1/4">Submit</button> 
                 </div>
@@ -28,22 +33,25 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div id="matakuliah_wajib" class="bg-white p-4 rounded-lg shadow-lg">
                 <h1 class="text-2xl font-bold text-stone-500 mb-4 text-center">Mata Kuliah Wajib</h1>
+                <!-- Looping untuk menampilkan tiap mata kuliah wajib -->
                 {% for nama_matkul in mata_kuliah_wajib %}
                     <p class="text-stone-600 mb-2">- {{ nama_matkul }}</p>
                 {% endfor %}
             </div>
             <div id="matakuliah_pilihan" class="bg-white p-4 rounded-lg shadow-lg">
                 <h1 class="text-2xl font-bold text-stone-500 mb-4 text-center">Mata Kuliah Pilihan</h1>
+                <!-- Looping untuk menampilkan tiap mata kuliah pilihan, jika tidak ada maka mencetak "Tidak ada Mata Kuliah Pilihan" -->
                 {% if mata_kuliah_pilihan %}
                     {% for nama_matkul in mata_kuliah_pilihan %}
                         <p class="text-stone-600 mb-2">- {{ nama_matkul }}</p>
                     {% endfor %}
                 {% else %}
-                    <p>Tidak ada Mata Kuliah Pilihan</p>
+                    <p class="text-stone-600">Tidak ada Mata Kuliah Pilihan</p>
                 {% endif %}
             </div>
         </div>
         <h1 class="text-2xl font-bold text-white mt-4 text-center">Apakah ingin melihat mata kuliah semester yang lain?"</h1>
+        <!-- Form untuk mengirim data ke /getsemester -->
         <form method="POST" action="/getsemester">
             <div class="flex place-content-evenly gap-6 ">
                 <input type="hidden" name="nama" value="{{ nama }}">

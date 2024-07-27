@@ -1,5 +1,5 @@
-# This file is used by pip to install required python packages
-# Usage: pip install -r requirements.
+# File ini digunakan pip untuk instalasi package python yang diperlukan
+# Penggunaan: pip install -r requirements.
 
 #Packages
 flask

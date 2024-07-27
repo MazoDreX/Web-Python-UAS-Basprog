@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Siakad</title>
+  <!-- Link untuk tailwindcss dan file javascript -->
   <link rel="stylesheet" href="{{url_for('static', filename='dist/css/output.css')}}">
   <script src="{{url_for('static', filename='js/script.js') }}"></script>
+  <!-- Mengubah list dari route menjadi json -->
   <script> const programStudiOptions = {{ program_studi | tojson }}; </script>
 </head>
 <body class="bg-stone-100 flex items-center justify-center min-h-screen">
@@ -29,6 +31,7 @@
             <div>
                 <div class="flex flex-col p-2">
                     <label class="text-white mb-2">Fakultas</label>
+                    <!-- opsi Program studi akan berubah saat fakultas diganti -->
                     <select id="fakultas" name="fakultas" class="p-2 bg-stone-500 text-white rounded-md" onchange="updateProgramStudi()">
                         <option  value="" selected disabled hidden>Pilih Fakultas</option>
                         <!-- loop untuk mengambil data fakultas -->
@@ -46,6 +49,7 @@
                 </div>
                 <div class="flex flex-col p-2">
                     <label class="text-white mb-2">Semester</label>
+                    <!-- Input minimal 1 dan maksimal 8, setiap submit akan mengecek apakah input benar atau salah -->
                     <input name="semester" id="semester" type="number" class="p-2 bg-stone-500 text-white rounded-md" min="1" max="8" onblur="validateSemester()">
                 </div>
             </div>

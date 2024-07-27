@@ -1,6 +1,9 @@
 from app.utils.query import make_table_mahasiswa, make_table_matakuliah_TI, make_table_mahasiswa_matakuliah, insert_query_matakuliah
 from app.utils.data import mata_kuliah_TI, mata_kuliah_TI_Pilihan
 
+"""
+    Fungsi untuk membuat tabel
+"""
 def make_table(connection):
     cursor = connection.cursor()
     cursor.execute(make_table_mahasiswa)
@@ -8,6 +11,9 @@ def make_table(connection):
     cursor.execute(make_table_mahasiswa_matakuliah)
     print("Tabel Mahasiswa, Matakuliah_TI, Mahasiswa_Matakuliah telah dibuat")
 
+"""
+    Fungsi untuk membuat tabel matakuliah_TI jika tidak ada atau pertama kali program dijalankan
+"""
 def matkul_TI_insert(connection):
     cursor = connection.cursor()
     check_query = "SELECT 1 FROM matakuliah_TI WHERE semester = %s AND nama_mata_kuliah = %s"
@@ -33,6 +39,7 @@ def matkul_TI_insert(connection):
     connection.commit()
     cursor.close()
 
+#Fungsi untuk mengambil data nama matakuliah berdasarkan semester
 def get_name_matakuliah(connection, semester, query):
     cursor = connection.cursor()
     cursor.execute(query, (semester, ))
@@ -40,6 +47,7 @@ def get_name_matakuliah(connection, semester, query):
     cursor.close()
     return [baris[0] for baris in result]
 
+#Fungsi untuk mengambil id dari matakuliah
 def get_id(connection, query, params):
     cursor = connection.cursor()
     cursor.execute(query, params)
@@ -47,6 +55,7 @@ def get_id(connection, query, params):
     cursor.close()
     return result
 
+#Fungsi untuk memasukan data mahasiswa dan langsung mengambil idnya
 def insert_data_get_id(connection, query, data):
     cursor = connection.cursor()
     cursor.execute(query, data)
@@ -55,12 +64,14 @@ def insert_data_get_id(connection, query, data):
     cursor.close()
     return id
 
+#Fungsi untuk memasukan data
 def insert_data(connection, query, data):
     cursor = connection.cursor()
     cursor.execute(query, data)
     connection.commit()
     cursor.close()
 
+#Fungsi untuk mengambil nama mata kuliah berdasarkan id
 def get_nama_matakuliah(connection, id_list, query):
     id_tuple = tuple(id_list)
     cursor = connection.cursor()
